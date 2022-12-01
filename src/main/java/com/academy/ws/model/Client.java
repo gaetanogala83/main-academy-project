@@ -17,9 +17,7 @@ public class Client {
     private String fiscalCode;
     private String location;
     @OneToMany(mappedBy = "client",
-            fetch = FetchType.LAZY,
-            orphanRemoval = true,
-            cascade = CascadeType.ALL)
+            fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Order> orders;
 
