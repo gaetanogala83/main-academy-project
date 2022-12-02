@@ -2,7 +2,6 @@ package com.academy.ws.controller;
 
 import com.academy.ws.model.Order;
 import com.academy.ws.service.OrderService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,12 +29,9 @@ public class OrderController {
     public ResponseEntity<List<Order>> getAllOrders() {
         List<Order> allOrders = orderService.getAllOrders();
 
-//        Link link = linkTo(CustomerController.class).withSelfRel();
-
         if(allOrders.isEmpty())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-//        CollectionModel<Order> result = CollectionModel.of(allOrders, link);
         return new ResponseEntity<>(allOrders, HttpStatus.OK);
     }
 

@@ -22,7 +22,6 @@ CREATE TABLE ORDERS(
    client_id integer,
    primary key(id),
    foreign key(client_id) references clients(id)
---   foreign key(product_id) references products(id)
 );
 
 
