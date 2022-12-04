@@ -1,19 +1,12 @@
 CREATE TABLE CLIENTS(
-   id integer not null auto_increment,
+   id integer not null,
    name varchar(255) not null,
    surname varchar(255) not null,
-   fiscal_code varchar(25) not null,
+--   fiscal_code varchar(25) not null,
+   fiscal_code varchar(25),
    location varchar(255),
    primary key(id)
 );
-
---CREATE TABLE PRODUCTS(
---   id integer not null auto_increment,
---   name varchar(255) not null,
---   price decimal not null,
---   description varchar(255),
---   primary key(id)
---);
 
 CREATE TABLE ORDERS(
    id integer not null auto_increment,
