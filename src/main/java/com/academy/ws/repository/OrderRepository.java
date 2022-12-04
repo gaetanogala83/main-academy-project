@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface OrderRepository extends CrudRepository<Order, Integer> {
 
-    Optional<List<Order>> findByClientId(Integer clientId);
+    Optional<List<Order>> findByClient_Id(Integer client_id);
 
 }

@@ -20,7 +20,7 @@ public class ClientController {
 
     @GetMapping("/keepAlive")
     public ResponseEntity<String> keepAlive(){
-        return new ResponseEntity<>("I'm ALIVE", HttpStatus.OK);
+        return new ResponseEntity<>("The CLIENT Controller is ALIVE", HttpStatus.OK);
     }
 
     @GetMapping

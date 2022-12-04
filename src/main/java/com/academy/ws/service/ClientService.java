@@ -2,10 +2,9 @@ package com.academy.ws.service;
 
 import com.academy.ws.model.Client;
 import com.academy.ws.repository.ClientRepository;
-import org.hibernate.id.IntegralDataTypeHolder;
+import com.academy.ws.utils.WsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,14 +55,20 @@ public class ClientService {
         return clientRepository.save(clientToSave);
     }
 
-    public Client updateClient(Client clientToUpdate){
+    public Client updateClient(Client client){
+
+        if(client.getId() == null)
+            return null;
+
+        Optional<Client> retrievedClient = clientRepository.findById(client.getId());
+
+        if(retrievedClient.isEmpty())
+            return null;
+
+        Client clientToUpdate = retrievedClient.get();
+        WsUtils.copyProperties(client, clientToUpdate);
 
         return clientRepository.save(clientToUpdate);
-
     }
-
-
-
-
 
 }

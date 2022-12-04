@@ -1,5 +1,6 @@
 package com.academy.ws.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.util.List;
 @Entity
 @Table(name = "CLIENTS")
 @SequenceGenerator(name= "CLIENTS_SEQUENCE", sequenceName = "CLIENTS_SEQUENCE_ID", allocationSize = 1)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Client {
 
     @Id
@@ -18,7 +20,8 @@ public class Client {
     private String fiscalCode;
     private String location;
     @OneToMany(mappedBy = "client",
-            fetch = FetchType.LAZY)
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Order> orders;
 
