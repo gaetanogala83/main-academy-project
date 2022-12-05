@@ -30,9 +30,15 @@ public class ClientService {
         return clientOpt.orElse(null);
     }
 
-    public void deleteClientById(Integer id){
+    public Boolean deleteClientById(Integer id){
+
+        Client client = retrieveClientById(id);
+        if(client == null)
+            return false;
 
         clientRepository.deleteById(id);
+
+        return true;
     }
 
     public Client retrieveClientByNameSurname(String name, String surname){

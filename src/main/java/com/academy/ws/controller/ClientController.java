@@ -1,5 +1,6 @@
 package com.academy.ws.controller;
 
+import com.academy.ws.exception.NotFoundException;
 import com.academy.ws.model.Client;
 import com.academy.ws.service.ClientService;
 import org.slf4j.Logger;
@@ -24,31 +25,32 @@ public class ClientController {
     @GetMapping("/keepAlive")
     public ResponseEntity<String> keepAlive(){
         LOGGER.info("Calling the KeepAlive API!");
+        LOGGER.debug("Calling the KeepAlive API DEBUG LOGGING MODE!");
+
         return new ResponseEntity<>("The CLIENT Controller is ALIVE", HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<Client>> getAllClients(){
+    public ResponseEntity<List<Client>> getAllClients() throws NotFoundException {
         LOGGER.info("Calling the getAllClients API!");
 
         List<Client> clients = clientService.retrieveAllClients();
 
         if(clients == null || clients.isEmpty())
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            throw new NotFoundException("Nessun client disponibile!");
 
         return new ResponseEntity<>(clients, HttpStatus.OK);
     }
 
 
     @GetMapping("/{clientId}")
-    public ResponseEntity<Client> getClientById(@PathVariable Integer clientId) {
+    public ResponseEntity<Client> getClientById(@PathVariable Integer clientId) throws NotFoundException {
         LOGGER.info("Calling the getClientById API!");
 
         Client client = clientService.retrieveClientById(clientId);
 
-        if (client == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        if (client == null)
+            throw new NotFoundException(String.format("Nessun client con id %d", clientId));
 
         return new ResponseEntity<>(client, HttpStatus.OK);
     }
@@ -70,11 +72,7 @@ public class ClientController {
     public ResponseEntity<String> deleteClient(@PathVariable Integer clientId) {
         LOGGER.info("Calling the deleteClient API!");
 
-        clientService.deleteClientById(clientId);
-
-        Client deleteClient = clientService.retrieveClientById(clientId);
-
-        if(deleteClient != null)
+        if(!clientService.deleteClientById(clientId))
             return new ResponseEntity<>("Something went wrong!", HttpStatus.INTERNAL_SERVER_ERROR);
 
         return new ResponseEntity<>(HttpStatus.OK);
